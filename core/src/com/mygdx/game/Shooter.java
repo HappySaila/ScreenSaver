@@ -16,27 +16,42 @@ public class Shooter extends Sprite {
     xY position;
     xY destination;
     Vector2 shootDirection;
+    int rotateSpeed;
     ArrayList<Texture> textures;
+    ArrayList<Bullet> bullets;
+    float timer;
+    float shootDelay = 0.1f;
     enum State{
         SHOOT, MOVE;
     }
+    State state;
 
     public Shooter(){
         super(new Texture("shooter0.png"));
-        State state = State.SHOOT;
+        shootDirection = new Vector2(0,1);
+        rotateSpeed = Utils.generate(1000);
+        state = State.SHOOT;
         createTextures();
         Texture t = fetchTexture();
+//        setPosition(Driver.width/2, Driver.height/2);
         setPosition(Utils.generate(Driver.width), Utils.generate(Driver.height));
         setSize(t.getWidth(), t.getHeight());
         setTexture(t);
+        bullets = new ArrayList<Bullet>();
     }
 
     public void render(SpriteBatch sb, float delta){
         update(delta);
         draw(sb);
+        for (Bullet b:bullets){
+            b.render(sb, delta);
+        }
     }
 
     private void update(float delta){
+        if (state == State.SHOOT){
+            fire(delta);
+        }
     }
 
     private void createTextures(){
@@ -46,8 +61,12 @@ public class Shooter extends Sprite {
         }
     }
 
-    private void fire(){
-
+    private void fire(float delta){
+        timer+=delta;
+        if (timer>shootDelay){
+            timer = 0;
+            bullets.add(new Bullet(new Vector2(getX(), getY()), shootDirection.rotate(delta*rotateSpeed)));
+        }
     }
 
 
