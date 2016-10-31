@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
 
@@ -15,11 +16,13 @@ public class ScreenSaver implements Screen{
     Driver game;
     Shooter shooter;
     ArrayList<Shooter> shooters;
+    Vector2 position;
 
     public ScreenSaver(Driver game){
         this.game = game;
         shooter = new Shooter();
-        createShooters(6);
+        createShooters(5);
+        position = new Vector2(Driver.width/2, Driver.height/2);
     }
 
     @Override
@@ -28,7 +31,7 @@ public class ScreenSaver implements Screen{
             System.exit(0);
         }
         game.sb.begin();
-//        clearScreen();
+        clearScreen();
         renderShooters(game.sb, delta);
         game.sb.end();
     }
@@ -36,6 +39,7 @@ public class ScreenSaver implements Screen{
     private void renderShooters(SpriteBatch sb, float delta){
         for (Shooter s:shooters){
             s.render(game.sb, delta);
+            s.setPosition(position.x - s.getWidth()/2, position.y - s.getHeight()/2);
         }
     }
 

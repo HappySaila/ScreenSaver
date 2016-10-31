@@ -33,8 +33,8 @@ public class Shooter extends Sprite {
         state = State.SHOOT;
         createTextures();
         Texture t = fetchTexture();
-//        setPosition(Driver.width/2, Driver.height/2);
-        setPosition(Utils.generate(Driver.width), Utils.generate(Driver.height));
+        setPosition(Driver.width/2, Driver.height/2);
+//        setPosition(Utils.generate(Driver.width), Utils.generate(Driver.height));
         setSize(t.getWidth(), t.getHeight());
         setTexture(t);
         bullets = new ArrayList<Bullet>();
@@ -42,7 +42,7 @@ public class Shooter extends Sprite {
 
     public void render(SpriteBatch sb, float delta){
         update(delta);
-        draw(sb);
+//        draw(sb);
         for (Bullet b:bullets){
             b.render(sb, delta);
         }
