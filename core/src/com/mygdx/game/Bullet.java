@@ -3,7 +3,6 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -17,9 +16,11 @@ public class Bullet extends Sprite {
     Vector2 direction;
     boolean alive;
     ArrayList<Texture> textures;
+    Driver game;
 
-    public Bullet(Vector2 position, Vector2 direction) {
+    public Bullet(Vector2 position, Vector2 direction, Driver game) {
         super(new Texture("bullet0.png"));
+        this.game = game;
         this.position = position;
         this.direction = new Vector2(direction);
         speed = Utils.generate(3,14);
@@ -46,7 +47,11 @@ public class Bullet extends Sprite {
     private void createTextures(){
         textures = new ArrayList<Texture>();
         for (int i = 0; i < 8; i++) {
-            textures.add(new Texture("bullet"+i+".png"));
+            if (game.glow){
+                textures.add(new Texture("shooter"+i+".png"));
+            }else{
+                textures.add(new Texture("bullet"+i+".png"));
+            }
         }
     }
 

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.util.ArrayList;
 
@@ -25,9 +24,11 @@ public class Shooter extends Sprite {
         SHOOT, MOVE;
     }
     State state;
+    Driver game;
 
-    public Shooter(){
+    public Shooter(Driver game){
         super(new Texture("shooter0.png"));
+        this.game = game;
         shootDirection = new Vector2(0,1);
         rotateSpeed = Utils.generate(1000);
         state = State.SHOOT;
@@ -40,7 +41,7 @@ public class Shooter extends Sprite {
         bullets = new ArrayList<Bullet>();
         int numberBullets = 10;
         for (int i = 0; i < numberBullets; i++) {
-            bullets.add(new Bullet(new Vector2(getX(), getY()), shootDirection.rotate(Utils.generate(360))));
+            bullets.add(new Bullet(new Vector2(getX(), getY()), shootDirection.rotate(Utils.generate(360)), game));
         }
     }
 
@@ -64,15 +65,6 @@ public class Shooter extends Sprite {
             textures.add(new Texture("shooter"+i+".png"));
         }
     }
-
-    private void fire(float delta){
-        timer+=delta;
-        if (timer>shootDelay){
-            timer = 0;
-            bullets.add(new Bullet(new Vector2(getX(), getY()), shootDirection.rotate(delta*rotateSpeed)));
-        }
-    }
-
 
     private Texture fetchTexture(){
         Texture t = textures.get(Utils.generate(textures.size()));
