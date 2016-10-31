@@ -7,6 +7,9 @@ import com.mygdx.game.Driver;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+//		config.fullscreen = true;
+		config.width = Driver.width;
+		config.height = Driver.height;
 		new LwjglApplication(new Driver(), config);
 	}
 }
