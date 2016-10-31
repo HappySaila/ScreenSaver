@@ -38,6 +38,10 @@ public class Shooter extends Sprite {
         setSize(t.getWidth(), t.getHeight());
         setTexture(t);
         bullets = new ArrayList<Bullet>();
+        int numberBullets = 10;
+        for (int i = 0; i < numberBullets; i++) {
+            bullets.add(new Bullet(new Vector2(getX(), getY()), shootDirection.rotate(Utils.generate(360))));
+        }
     }
 
     public void render(SpriteBatch sb, float delta){
@@ -50,7 +54,7 @@ public class Shooter extends Sprite {
 
     private void update(float delta){
         if (state == State.SHOOT){
-            fire(delta);
+//            fire(delta);
         }
     }
 
@@ -74,5 +78,4 @@ public class Shooter extends Sprite {
         Texture t = textures.get(Utils.generate(textures.size()));
         return t;
     }
-
 }

@@ -35,6 +35,9 @@ public class Bullet extends Sprite {
     }
 
     private void update(float delta){
+        if (position.x > Driver.width || position.y > Driver.height || position.x < 0-getX() || position.y < 0 - getY()){
+            position.set(Driver.width/2, Driver.height/2);
+        }
         position.add(direction.x*speed, direction.y*speed);
         setPosition(position.x, position.y);
         setRotation(delta*speed);

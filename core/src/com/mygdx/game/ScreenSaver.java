@@ -21,7 +21,7 @@ public class ScreenSaver implements Screen{
     public ScreenSaver(Driver game){
         this.game = game;
         shooter = new Shooter();
-        createShooters(5);
+        createShooters(10);
         position = new Vector2(Driver.width/2, Driver.height/2);
     }
 
@@ -39,7 +39,7 @@ public class ScreenSaver implements Screen{
     private void renderShooters(SpriteBatch sb, float delta){
         for (Shooter s:shooters){
             s.render(game.sb, delta);
-            s.setPosition(position.x - s.getWidth()/2, position.y - s.getHeight()/2);
+            s.setPosition(Gdx.input.getX() - s.getWidth()/2, Driver.height - Gdx.input.getY() - s.getHeight()/2);
         }
     }
 
