@@ -73,6 +73,8 @@ public class Bullet extends Sprite {
             position.set(Driver.width/2, Driver.height/2);
             direction.scl(-1);
         }
+        int i;
+        setSize(i = (int)Math.abs(getX()-Driver.width/2)/10, i);
     }
 
     private void createTextures(){
