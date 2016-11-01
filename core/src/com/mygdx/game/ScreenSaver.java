@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -16,18 +17,31 @@ public class ScreenSaver implements Screen{
     Shooter shooter;
     ArrayList<Shooter> shooters;
     Vector2 position;
+    OrthographicCamera camera;
 
-    public ScreenSaver(Driver game){
+    float rotateSpeed;
+    float maxSpeed;
+    boolean clockWise;
+
+    public ScreenSaver(Driver game, int shooters, int bullets){
         this.game = game;
-        createShooters(10);
+        createShooters(shooters, bullets);
         position = new Vector2(Driver.width/2, Driver.height/2);
+        camera = new OrthographicCamera(Driver.width, Driver.height);
+        camera.setToOrtho(true, Driver.width, Driver.height);
+        camera.zoom = (2);
+        maxSpeed = 1;
     }
 
     @Override
     public void render(float delta) {
+        camera.update();
+        camera.rotate(rotateSpeed);
+        updateRotateSpeed(delta);
         if (Gdx.input.isTouched()){
             System.exit(0);
         }
+        game.sb.setProjectionMatrix(camera.combined);
         game.sb.begin();
         clearScreen();
         renderShooters(game.sb, delta);
@@ -41,15 +55,29 @@ public class ScreenSaver implements Screen{
         }
     }
 
+    private void updateRotateSpeed(float delta){
+        if (clockWise){
+            rotateSpeed+=delta/10;
+            if (rotateSpeed>maxSpeed){
+                clockWise=false;
+            }
+        }else{
+            rotateSpeed-=delta/10;
+            if (rotateSpeed<-maxSpeed){
+                clockWise=true;
+            }
+        }
+    }
+
     private void clearScreen(){
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-    private void createShooters(int i){
-        shooters = new ArrayList<Shooter>();
-        for (int j = 0; j < i; j++) {
-            shooters.add(new Shooter(game));
+    private void createShooters(int shooters, int bullets){
+        this.shooters = new ArrayList<Shooter>();
+        for (int j = 0; j < shooters; j++) {
+            this.shooters.add(new Shooter(game, bullets));
         }
     }
     //region rubbish

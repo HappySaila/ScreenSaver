@@ -17,7 +17,9 @@ public class Driver extends Game {
 		}else{
 			glow =true;
 		}
-		setScreen(new ScreenSaver(this));
+		int shooters = 10;
+		int bullets = 100;
+		setScreen(new ScreenSaver(this, shooters, bullets));
 	}
 
 	@Override

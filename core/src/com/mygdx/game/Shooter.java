@@ -26,7 +26,7 @@ public class Shooter extends Sprite {
     State state;
     Driver game;
 
-    public Shooter(Driver game){
+    public Shooter(Driver game, int numberBullets){
         super(new Texture("shooter0.png"));
         this.game = game;
         shootDirection = new Vector2(0,1);
@@ -39,7 +39,6 @@ public class Shooter extends Sprite {
         setSize(t.getWidth(), t.getHeight());
         setTexture(t);
         bullets = new ArrayList<Bullet>();
-        int numberBullets = 10;
         for (int i = 0; i < numberBullets; i++) {
             bullets.add(new Bullet(new Vector2(getX(), getY()), shootDirection.rotate(Utils.generate(360)), game));
         }

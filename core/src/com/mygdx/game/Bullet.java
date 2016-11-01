@@ -17,41 +17,69 @@ public class Bullet extends Sprite {
     boolean alive;
     ArrayList<Texture> textures;
     Driver game;
+    boolean clockWise;
+    float timer;
+    float lifeTimer;
+    float aliveTimer;
 
     public Bullet(Vector2 position, Vector2 direction, Driver game) {
         super(new Texture("bullet0.png"));
+        lifeTimer = (float)Utils.generate(80, 120)/10;
         this.game = game;
         this.position = position;
         this.direction = new Vector2(direction);
-        speed = Utils.generate(3,14);
+        speed = Utils.generate(3,5);
+        this.direction.scl(speed);
         createTextures();
         Texture t = fetchTexture();
-        setSize(t.getWidth(), t.getHeight());
         setTexture(t);
+        float alpha = (float)Utils.generate(1,10)/10;
+        if (alpha>0.6){
+            alpha=1;
+        }
+        int i = Utils.generate(2);
+        if (i==1){
+            clockWise = true;
+        }
+        setAlpha(alpha);
+        setSize(t.getWidth(), t.getHeight());
+        aliveTimer = (float)Utils.generate(200)/10;
     }
 
     public void render(SpriteBatch sb, float delta){
-        update(delta);
-        draw(sb);
+        if (alive){
+            update(delta);
+            draw(sb);
+        }else{
+            timer+=delta;
+            if (timer>aliveTimer){
+                alive=true;
+            }
+        }
     }
 
     private void update(float delta){
-        if (position.x > Driver.width || position.y > Driver.height || position.x < 0-getX() || position.y < 0 - getY()){
-            position.set(Driver.width/2, Driver.height/2);
+        position.add(direction);
+        if (clockWise){
+            direction.rotate(-delta*speed*3);
+        }else{
+            direction.rotate(delta*speed*3);
         }
-        position.add(direction.x*speed, direction.y*speed);
         setPosition(position.x, position.y);
         setRotation(delta*speed);
+        timer+=delta;
+        if (timer>lifeTimer){
+            timer = 0;
+            position.set(Driver.width/2, Driver.height/2);
+            direction.scl(-1);
+        }
     }
 
     private void createTextures(){
         textures = new ArrayList<Texture>();
         for (int i = 0; i < 8; i++) {
-            if (game.glow){
-                textures.add(new Texture("shooter"+i+".png"));
-            }else{
-                textures.add(new Texture("bullet"+i+".png"));
-            }
+//            textures.add(new Texture("shooter"+i+".png"));
+            textures.add(new Texture("bullet" + i + ".png"));
         }
     }
 
