@@ -30,7 +30,7 @@ public class ScreenSaver implements Screen{
         camera = new OrthographicCamera(Driver.width, Driver.height);
         camera.setToOrtho(true, Driver.width, Driver.height);
         camera.zoom = (2);
-        maxSpeed = 1;
+        maxSpeed = 0.5f;
     }
 
     @Override

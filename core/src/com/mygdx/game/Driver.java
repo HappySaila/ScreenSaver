@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Driver extends Game {
 	public SpriteBatch sb;
-	public static final int height = 768;
-	public static final int width = 1366;
+	public static final int height = 1600;
+	public static final int width = 2560;
 	public static boolean glow;
 
 	@Override

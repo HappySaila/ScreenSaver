@@ -24,7 +24,7 @@ public class Bullet extends Sprite {
 
     public Bullet(Vector2 position, Vector2 direction, Driver game) {
         super(new Texture("bullet0.png"));
-        lifeTimer = (float)Utils.generate(80, 120)/10;
+        lifeTimer = (float)Utils.generate(200, 300)/10;
         this.game = game;
         this.position = position;
         this.direction = new Vector2(direction);
@@ -61,9 +61,9 @@ public class Bullet extends Sprite {
     private void update(float delta){
         position.add(direction);
         if (clockWise){
-            direction.rotate(-delta*speed*3);
+            direction.rotate(-delta*speed);
         }else{
-            direction.rotate(delta*speed*3);
+            direction.rotate(delta*speed);
         }
         setPosition(position.x, position.y);
         setRotation(delta*speed);
@@ -80,7 +80,6 @@ public class Bullet extends Sprite {
     private void createTextures(){
         textures = new ArrayList<Texture>();
         for (int i = 0; i < 8; i++) {
-//            textures.add(new Texture("shooter"+i+".png"));
             textures.add(new Texture("bullet" + i + ".png"));
         }
     }

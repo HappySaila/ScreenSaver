@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = Driver.width;
 		config.height = Driver.height;
-//		config.fullscreen = true;
+		config.fullscreen = true;
 		config.title = "Bubble Burst";
 		new LwjglApplication(new Driver(), config);
 	}

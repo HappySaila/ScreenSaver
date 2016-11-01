@@ -27,17 +27,13 @@ public class Shooter extends Sprite {
     Driver game;
 
     public Shooter(Driver game, int numberBullets){
-        super(new Texture("shooter0.png"));
+        super(new Texture("bullet0.png"));
         this.game = game;
         shootDirection = new Vector2(0,1);
         rotateSpeed = Utils.generate(1000);
         state = State.SHOOT;
-        createTextures();
-        Texture t = fetchTexture();
         setPosition(Driver.width/2, Driver.height/2);
 //        setPosition(Utils.generate(Driver.width), Utils.generate(Driver.height));
-        setSize(t.getWidth(), t.getHeight());
-        setTexture(t);
         bullets = new ArrayList<Bullet>();
         for (int i = 0; i < numberBullets; i++) {
             bullets.add(new Bullet(new Vector2(getX(), getY()), shootDirection.rotate(Utils.generate(360)), game));
@@ -56,17 +52,5 @@ public class Shooter extends Sprite {
         if (state == State.SHOOT){
 //            fire(delta);
         }
-    }
-
-    private void createTextures(){
-        textures = new ArrayList<Texture>();
-        for (int i = 0; i < 8; i++) {
-            textures.add(new Texture("shooter"+i+".png"));
-        }
-    }
-
-    private Texture fetchTexture(){
-        Texture t = textures.get(Utils.generate(textures.size()));
-        return t;
     }
 }
